@@ -3,52 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Bagas — Software Engineer & Mobile Developer</title>
+  <title>Bagas — Software Engineer & Mobile Architect</title>
   <meta name="description" content="Portfolio Bagas (bagas6282) — Software engineer specializing in Flutter, mobile architecture, local-first offline systems, and AI tooling.">
-  
-  <!-- Fonts -->
+
+  <!-- Google Fonts: Plus Jakarta Sans, Outfit, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     /* ==========================================================================
-       DESIGN TOKENS & SYSTEM (UI/UX PRO MAX + POPULAR-WEB-DESIGNS)
+       DESIGN TOKENS & SYSTEM (UI/UX PRO MAX + MOTION UI + FRAMER PHYSICS)
        ========================================================================== */
     :root {
-      --bg-pitch: #060709;
-      --bg-surface: #0e1117;
-      --bg-card: rgba(18, 22, 31, 0.7);
-      --bg-card-hover: rgba(24, 30, 42, 0.85);
-      --bg-glass: rgba(255, 255, 255, 0.04);
+      --bg-pitch: #06080c;
+      --bg-surface: #0c1017;
+      --bg-card: rgba(14, 19, 28, 0.72);
+      --bg-card-hover: rgba(20, 27, 40, 0.88);
+      --bg-glass: rgba(255, 255, 255, 0.035);
+      
       --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(255, 255, 255, 0.2);
+      --border-light: rgba(255, 255, 255, 0.16);
+      --border-hover: rgba(16, 185, 129, 0.4);
       
       --accent-emerald: #10b981;
-      --accent-emerald-glow: rgba(16, 185, 129, 0.25);
+      --accent-emerald-light: #34d399;
+      --accent-emerald-glow: rgba(16, 185, 129, 0.35);
       --accent-cyan: #06b6d4;
-      --accent-cyan-glow: rgba(6, 182, 212, 0.25);
+      --accent-cyan-glow: rgba(6, 182, 212, 0.3);
       --accent-indigo: #6366f1;
+      --accent-indigo-glow: rgba(99, 102, 241, 0.25);
       
       --text-primary: #ffffff;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
       
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --radius-xl: 28px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
       --radius-full: 9999px;
       
-      --font-heading: 'Syne', sans-serif;
+      --font-display: 'Outfit', sans-serif;
       --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
       
-      --spring-ease: cubic-bezier(0.16, 1, 0.3, 1);
-      --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --spring-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+      --spring-bouncy: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* Reset & Base */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -62,26 +65,89 @@
       font-family: var(--font-body);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      selection-background-color: var(--accent-emerald);
-      selection-color: #000;
     }
 
     ::selection {
       background: var(--accent-emerald);
-      color: #000;
+      color: #000000;
     }
 
     body {
       overflow-x: hidden;
-      line-height: 1.6;
-      background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.07) 0%, transparent 60%),
-                  radial-gradient(circle at 100% 40%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
-                  radial-gradient(circle at 0% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-                  var(--bg-pitch);
       min-height: 100vh;
+      line-height: 1.65;
+      background-color: var(--bg-pitch);
+      position: relative;
     }
 
-    /* Noise Texture Overlay */
+    /* Ambient Background Animated Blobs */
+    .ambient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+      animation: floatBlobs 20s infinite alternate ease-in-out;
+    }
+
+    .blob-1 {
+      top: -10%;
+      left: 20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-emerald-glow) 0%, transparent 70%);
+      animation-duration: 18s;
+    }
+
+    .blob-2 {
+      top: 40%;
+      right: -10%;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, var(--accent-cyan-glow) 0%, transparent 70%);
+      animation-duration: 24s;
+      animation-delay: -5s;
+    }
+
+    .blob-3 {
+      bottom: -15%;
+      left: 5%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, var(--accent-indigo-glow) 0%, transparent 70%);
+      animation-duration: 22s;
+      animation-delay: -10s;
+    }
+
+    @keyframes floatBlobs {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 40px) scale(1.08); }
+      100% { transform: translate(-40px, 70px) scale(0.95); }
+    }
+
+    /* Interactive Canvas for particle constellation */
+    #particleCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.45;
+    }
+
+    /* Noise Texture */
     .noise-overlay {
       position: fixed;
       top: 0;
@@ -89,44 +155,48 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      opacity: 0.025;
-      z-index: 999;
+      opacity: 0.022;
+      z-index: 2;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
-    /* Container */
+    /* Content Layout */
     .container {
+      position: relative;
+      z-index: 10;
       width: 100%;
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 1.75rem;
     }
 
     /* Typography */
     h1, h2, h3, h4 {
-      font-family: var(--font-heading);
-      letter-spacing: -0.025em;
-      line-height: 1.15;
+      font-family: var(--font-display);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
       color: var(--text-primary);
+      font-weight: 800;
     }
 
     p {
       color: var(--text-secondary);
       font-size: 1.05rem;
+      line-height: 1.7;
     }
 
     /* ==========================================================================
-       NAVIGATION
+       FLOATING GLASS NAVBAR
        ========================================================================== */
     .nav-wrapper {
       position: fixed;
-      top: 1.25rem;
+      top: 1.5rem;
       left: 0;
       right: 0;
       z-index: 100;
       display: flex;
       justify-content: center;
-      padding: 0 1rem;
+      padding: 0 1.25rem;
       pointer-events: none;
     }
 
@@ -134,55 +204,61 @@
       pointer-events: auto;
       display: flex;
       align-items: center;
-      gap: 1.5rem;
-      background: rgba(14, 17, 23, 0.75);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      gap: 1.75rem;
+      background: rgba(12, 16, 23, 0.78);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--border-subtle);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
       border-radius: var(--radius-full);
-      padding: 0.5rem 0.6rem 0.5rem 1.25rem;
-      transition: all 0.3s var(--spring-ease);
+      padding: 0.55rem 0.75rem 0.55rem 1.4rem;
+      transition: all 0.3s var(--spring-smooth);
+    }
+
+    .nav-bar:hover {
+      border-color: var(--border-light);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 20px rgba(16, 185, 129, 0.15);
     }
 
     .nav-brand {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.65rem;
       text-decoration: none;
       color: var(--text-primary);
-      font-weight: 700;
-      font-size: 0.95rem;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.05rem;
       letter-spacing: -0.01em;
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       background-color: var(--accent-emerald);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--accent-emerald);
-      animation: pulseGlow 2.5s infinite;
+      box-shadow: 0 0 12px var(--accent-emerald);
+      animation: pulseGlow 2s infinite ease-in-out;
     }
 
     @keyframes pulseGlow {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 12px var(--accent-emerald); }
+      50% { opacity: 0.4; transform: scale(0.85); box-shadow: 0 0 4px var(--accent-emerald); }
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: 0.4rem;
       list-style: none;
     }
 
     .nav-link {
       color: var(--text-secondary);
       text-decoration: none;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 500;
-      padding: 0.45rem 0.9rem;
+      padding: 0.45rem 1rem;
       border-radius: var(--radius-full);
       transition: color 0.2s, background-color 0.2s;
     }
@@ -192,720 +268,915 @@
       background: var(--bg-glass);
     }
 
-    .btn-contact-nav {
-      display: flex;
+    .nav-btn {
+      display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      background: var(--text-primary);
-      color: #000;
-      font-size: 0.85rem;
-      font-weight: 600;
+      gap: 0.5rem;
+      background: #ffffff;
+      color: #06080c;
+      font-size: 0.88rem;
+      font-weight: 700;
       text-decoration: none;
-      padding: 0.45rem 1rem;
+      padding: 0.5rem 1.15rem;
       border-radius: var(--radius-full);
-      transition: transform 0.2s var(--spring-bounce), box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+      transition: all 0.25s var(--spring-bouncy);
     }
 
-    .btn-contact-nav:hover {
-      transform: scale(1.04);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    .nav-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.35);
     }
 
     /* ==========================================================================
        HERO SECTION
        ========================================================================== */
     .hero-section {
-      padding-top: 9.5rem;
-      padding-bottom: 5rem;
+      padding-top: 10.5rem;
+      padding-bottom: 6rem;
       position: relative;
     }
 
-    .hero-tag {
+    .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.9rem;
+      gap: 0.6rem;
+      padding: 0.45rem 1.1rem;
       background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.25);
+      border: 1px solid rgba(16, 185, 129, 0.28);
       border-radius: var(--radius-full);
-      color: var(--accent-emerald);
-      font-size: 0.82rem;
+      color: var(--accent-emerald-light);
+      font-size: 0.85rem;
       font-family: var(--font-mono);
-      font-weight: 500;
-      margin-bottom: 1.5rem;
-      animation: fadeIn 0.8s var(--spring-ease);
+      font-weight: 600;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+      animation: fadeInDown 0.8s var(--spring-smooth);
     }
 
     .hero-title {
-      font-size: clamp(2.5rem, 5.5vw + 0.5rem, 5rem);
-      font-weight: 800;
-      line-height: 1.05;
-      margin-bottom: 1.5rem;
-      max-width: 900px;
+      font-size: clamp(2.8rem, 5.8vw + 0.5rem, 5.4rem);
+      font-weight: 900;
+      line-height: 1.12;
+      margin-bottom: 1.75rem;
+      max-width: 980px;
+      letter-spacing: -0.025em;
     }
 
-    .gradient-text {
-      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+    .shimmer-text {
+      background: linear-gradient(90deg, #ffffff 0%, #cbd5e1 40%, #ffffff 70%, #94a3b8 100%);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: shimmer 6s linear infinite;
     }
 
-    .emerald-text {
-      background: linear-gradient(135deg, #34d399 20%, #059669 100%);
+    .emerald-gradient {
+      background: linear-gradient(135deg, #34d399 15%, #059669 85%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 35px rgba(16, 185, 129, 0.35);
     }
 
-    .hero-desc {
-      font-size: clamp(1.05rem, 1.2vw + 0.5rem, 1.25rem);
+    @keyframes shimmer {
+      to { background-position: 200% center; }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 1.25vw + 0.5rem, 1.35rem);
       color: var(--text-secondary);
-      max-width: 650px;
-      margin-bottom: 2.5rem;
+      max-width: 720px;
+      margin-bottom: 2.75rem;
+      line-height: 1.75;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 1rem;
+      gap: 1.25rem;
     }
 
-    .btn-primary {
+    .btn-main {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      background: var(--text-primary);
-      color: #000;
-      font-size: 0.95rem;
-      font-weight: 700;
+      gap: 0.65rem;
+      background: #ffffff;
+      color: #06080c;
+      font-size: 1rem;
+      font-weight: 800;
       text-decoration: none;
-      padding: 0.85rem 1.6rem;
+      padding: 0.95rem 1.85rem;
       border-radius: var(--radius-full);
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
-      transition: all 0.25s var(--spring-bounce);
+      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
+      transition: all 0.25s var(--spring-bouncy);
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.25);
+    .btn-main:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 36px rgba(255, 255, 255, 0.3);
     }
 
-    .btn-secondary {
+    .btn-glass {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      background: var(--bg-glass);
+      gap: 0.65rem;
+      background: rgba(255, 255, 255, 0.05);
       color: var(--text-primary);
       border: 1px solid var(--border-subtle);
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 600;
       text-decoration: none;
-      padding: 0.85rem 1.6rem;
+      padding: 0.95rem 1.85rem;
       border-radius: var(--radius-full);
-      backdrop-filter: blur(10px);
-      transition: all 0.25s var(--spring-ease);
+      backdrop-filter: blur(12px);
+      transition: all 0.25s var(--spring-smooth);
     }
 
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: var(--border-hover);
-      transform: translateY(-2px);
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-light);
+      transform: translateY(-3px);
     }
 
-    /* Quick stats under hero */
-    .hero-stats {
+    /* Live Stat Bar */
+    .hero-stats-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.25rem;
-      margin-top: 4.5rem;
-      padding-top: 2.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.75rem;
+      margin-top: 5rem;
+      padding-top: 3rem;
       border-top: 1px solid var(--border-subtle);
     }
 
-    .stat-item {
+    .stat-box {
       display: flex;
       flex-direction: column;
     }
 
-    .stat-number {
-      font-family: var(--font-heading);
-      font-size: 2.2rem;
+    .stat-val {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
       font-weight: 800;
-      color: var(--text-primary);
       line-height: 1;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+      letter-spacing: -0.02em;
     }
 
-    .stat-label {
-      font-size: 0.85rem;
+    .stat-lbl {
+      font-size: 0.88rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
       font-weight: 600;
+      letter-spacing: 0.06em;
     }
 
     /* ==========================================================================
        SECTION HEADERS
        ========================================================================== */
-    .section-header {
-      margin-bottom: 3rem;
+    .section-wrap {
+      margin-bottom: 7rem;
     }
 
-    .section-eyebrow {
+    .section-heading-box {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-tagline {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       font-family: var(--font-mono);
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       color: var(--accent-emerald);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       margin-bottom: 0.75rem;
       font-weight: 600;
     }
 
     .section-title {
-      font-size: clamp(2rem, 3.5vw + 0.5rem, 3rem);
-      margin-bottom: 0.75rem;
+      font-size: clamp(2.2rem, 3.8vw + 0.5rem, 3.4rem);
+      margin-bottom: 0.85rem;
     }
 
     /* ==========================================================================
-       BENTO GRID SYSTEM (UI/UX PRO MAX TASTE)
+       BENTO GRID CARDS (BORDER BEAM & 3D TILT PHYSICS)
        ========================================================================== */
-    .bento-grid {
+    .bento-showcase {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 6rem;
+      gap: 1.75rem;
     }
 
     .bento-card {
       position: relative;
       background: var(--bg-card);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-xl);
-      padding: 2.25rem;
+      padding: 2.75rem;
       overflow: hidden;
-      transition: transform 0.35s var(--spring-ease), border-color 0.35s, box-shadow 0.35s;
+      transition: transform 0.4s var(--spring-smooth), border-color 0.4s, box-shadow 0.4s;
     }
 
+    /* Dynamic Border Beam Animation */
     .bento-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    }
-
-    /* Mouse Spotlight Follower */
-    .bento-card .spotlight {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      inset: -1px;
+      border-radius: var(--radius-xl);
+      padding: 1px;
+      background: linear-gradient(
+        135deg,
+        transparent 30%,
+        rgba(16, 185, 129, 0.4) 50%,
+        rgba(6, 182, 212, 0.4) 70%,
+        transparent 90%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
       pointer-events: none;
-      opacity: 0;
-      background: radial-gradient(600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255, 255, 255, 0.06), transparent 40%);
-      transition: opacity 0.3s;
+      opacity: 0.4;
+      transition: opacity 0.4s;
     }
 
-    .bento-card:hover .spotlight {
+    .bento-card:hover::before {
       opacity: 1;
     }
 
     .bento-card:hover {
-      border-color: var(--border-hover);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+      border-color: rgba(16, 185, 129, 0.35);
+      box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(16, 185, 129, 0.1);
     }
 
-    /* Flagship Card: Duitku (Span 12) */
-    .card-duitku {
+    /* Mouse Spotlight Follower */
+    .spotlight-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(700px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255, 255, 255, 0.07), transparent 45%);
+      transition: opacity 0.35s;
+    }
+
+    .bento-card:hover .spotlight-glow {
+      opacity: 1;
+    }
+
+    /* FLAGSHIP CARD: DUITKU (SPAN 12) */
+    .card-duitku-flagship {
       grid-column: span 12;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
       align-items: center;
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(14, 17, 23, 0.8) 100%);
-      border: 1px solid rgba(16, 185, 129, 0.2);
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.06) 0%, rgba(12, 16, 23, 0.85) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.25);
     }
 
-    .card-duitku:hover {
-      border-color: rgba(16, 185, 129, 0.4);
-      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.15);
-    }
-
-    .badge-pill {
+    .pill-status {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: var(--radius-full);
-      padding: 0.3rem 0.8rem;
-      font-size: 0.78rem;
-      font-family: var(--font-mono);
-      color: #e2e8f0;
-      margin-bottom: 1.25rem;
-    }
-
-    .project-title {
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
-    }
-
-    .project-summary {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-      margin-bottom: 1.75rem;
-    }
-
-    .tech-chips {
-      display: flex;
-      flex-wrap: wrap;
       gap: 0.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .chip {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 0.35rem 0.75rem;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-full);
+      padding: 0.35rem 0.95rem;
       font-size: 0.82rem;
       font-family: var(--font-mono);
-      color: #cbd5e1;
+      font-weight: 600;
+      color: var(--accent-emerald-light);
+      margin-bottom: 1.5rem;
     }
 
-    .chip.highlight {
-      background: rgba(16, 185, 129, 0.12);
-      border-color: rgba(16, 185, 129, 0.3);
-      color: var(--accent-emerald);
+    .project-header-title {
+      font-size: clamp(2.2rem, 3.2vw, 3.2rem);
+      margin-bottom: 1.25rem;
+      line-height: 1.15;
+    }
+
+    .project-body {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.75;
+    }
+
+    .tech-pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .tech-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.85rem;
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      color: #cbd5e1;
+      transition: all 0.2s;
+    }
+
+    .tech-pill.primary {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: var(--accent-emerald-light);
+      font-weight: 600;
+    }
+
+    .tech-pill:hover {
+      border-color: var(--border-light);
+      transform: translateY(-2px);
     }
 
     /* ==========================================================================
-       INTERACTIVE PHONE SIMULATOR (DUITKU LIVE DEMO)
+       AUTHENTIC 3D SMARTPHONE SIMULATOR (TALL, CURVED, NON-GEPENG!)
        ========================================================================== */
-    .phone-mockup-wrapper {
+    .phone-stage {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
+      perspective: 1200px;
     }
 
-    .phone-frame {
-      width: 100%;
-      max-width: 340px;
-      background: #090a0f;
-      border: 6px solid #1e2433;
-      border-radius: 36px;
-      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 25px rgba(16, 185, 129, 0.15);
-      padding: 1.25rem;
+    /* Floating Levitation Animation */
+    .phone-device {
+      width: 330px;
+      min-height: 650px;
+      height: 650px;
+      background: #090c12;
+      border: 9px solid #1e2638;
+      border-radius: 48px;
+      box-shadow: 0 35px 80px -20px rgba(0, 0, 0, 0.9),
+                  0 0 35px rgba(16, 185, 129, 0.2),
+                  inset 0 0 2px 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: levitatePhone 4.5s ease-in-out infinite alternate;
+      transition: transform 0.3s var(--spring-smooth);
+    }
+
+    @keyframes levitatePhone {
+      0% { transform: translateY(0) rotate(-1deg); }
+      100% { transform: translateY(-14px) rotate(1deg); }
+    }
+
+    /* Dynamic Island at top */
+    .dynamic-island {
+      width: 100px;
+      height: 25px;
+      background: #000000;
+      border-radius: var(--radius-full);
+      margin: 10px auto 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      z-index: 20;
+    }
+
+    .camera-lens {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #111827;
+      border: 1px solid #1f2937;
+      position: relative;
+    }
+
+    .camera-lens::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 3px;
+      height: 3px;
+      background: #3b82f6;
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+    .sensor-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      opacity: 0.8;
+      animation: pulseGlow 1.5s infinite;
+    }
+
+    /* Status Bar */
+    .phone-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1.25rem 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Phone Internal Screen */
+    .phone-screen-content {
+      flex: 1;
+      padding: 0.75rem 1rem 1rem;
+      display: flex;
+      flex-direction: column;
       position: relative;
       overflow: hidden;
     }
 
-    /* Phone Speaker / Notch */
-    .phone-notch {
-      width: 80px;
-      height: 4px;
-      background: #2a3142;
-      border-radius: var(--radius-full);
-      margin: 0 auto 1.25rem;
+    /* Laser Scanner Sweep Line */
+    .scan-laser {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #10b981 50%, transparent);
+      box-shadow: 0 0 15px 3px #10b981;
+      pointer-events: none;
+      z-index: 15;
+      animation: scanSweep 3.5s infinite ease-in-out;
     }
 
-    /* Duitku In-App UI Card */
-    .mock-hero-card {
-      background: linear-gradient(145deg, #131722, #0d1017);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      border-radius: 20px;
-      padding: 1.2rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    @keyframes scanSweep {
+      0% { top: 0%; opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { top: 75%; opacity: 0; }
     }
 
-    /* Mode Switcher Pill */
-    .mock-period-toggle {
+    /* In-App Hero Balance Card */
+    .app-hero-card {
+      background: linear-gradient(145deg, #131a26, #0d121c);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 22px;
+      padding: 1.15rem;
+      margin-bottom: 0.85rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    /* Period Toggle Switcher */
+    .app-toggle-bar {
       display: flex;
-      background: #090b10;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #090c12;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-full);
       padding: 3px;
-      margin-bottom: 1rem;
+      margin-bottom: 0.95rem;
     }
 
-    .mock-period-btn {
+    .app-toggle-btn {
       flex: 1;
       border: none;
       background: transparent;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.4rem 0.5rem;
+      color: #64748b;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.45rem 0.6rem;
       border-radius: var(--radius-full);
       cursor: pointer;
-      transition: all 0.2s var(--spring-ease);
+      transition: all 0.25s var(--spring-smooth);
     }
 
-    .mock-period-btn.active {
-      background: #1e2638;
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    }
-
-    .mock-period-btn.active.daily {
+    .app-toggle-btn.active {
       background: rgba(16, 185, 129, 0.2);
-      color: var(--accent-emerald);
+      color: var(--accent-emerald-light);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 
-    .mock-date-header {
+    .app-date-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
     }
 
-    .mock-date-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #cbd5e1;
-    }
-
-    .mock-balance-val {
-      font-size: 1.7rem;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 0.8rem;
-      font-variant-numeric: tabular-nums;
-      transition: all 0.25s;
-    }
-
-    .mock-in-out {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 0.6rem 0.8rem;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .mock-in-out-col {
-      flex: 1;
-    }
-
-    .mock-label {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    .mock-val-green {
+    .app-date-text {
       font-size: 0.88rem;
       font-weight: 700;
-      color: #10b981;
-    }
-
-    .mock-val-red {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #ef4444;
-    }
-
-    .mock-tx-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .mock-tx-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 12px;
-      padding: 0.65rem 0.8rem;
-    }
-
-    .mock-tx-info {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .mock-tx-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: rgba(16, 185, 129, 0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-    }
-
-    .mock-tx-name {
-      font-size: 0.8rem;
-      font-weight: 600;
       color: #e2e8f0;
     }
 
-    .mock-tx-date {
-      font-size: 0.68rem;
-      color: var(--text-muted);
+    .app-balance-display {
+      font-family: var(--font-display);
+      font-size: 1.95rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.85rem;
+      font-variant-numeric: tabular-nums;
+      transition: transform 0.2s var(--spring-bouncy);
     }
 
-    .mock-tx-amount {
+    .app-in-out-grid {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.65rem 0.85rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .in-out-subcol {
+      flex: 1;
+    }
+
+    .in-out-lbl {
+      font-size: 0.68rem;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .in-out-green {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #10b981;
+    }
+
+    .in-out-red {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #f87171;
+    }
+
+    /* Transaction Stream inside Phone */
+    .app-tx-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      flex: 1;
+    }
+
+    .app-tx-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 14px;
+      padding: 0.65rem 0.85rem;
+      transition: background 0.2s;
+    }
+
+    .app-tx-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .tx-meta-box {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .tx-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    .tx-title {
       font-size: 0.82rem;
       font-weight: 700;
       color: #f1f5f9;
     }
 
-    /* Fixed Bottom Feedback Banner in Mockup */
-    .mock-bottom-snackbar {
+    .tx-sub {
+      font-size: 0.68rem;
+      color: #64748b;
+    }
+
+    .tx-num {
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    /* Fixed Bottom Feedback Banner in App (Requested refinement!) */
+    .app-bottom-feedback {
       position: absolute;
-      bottom: 12px;
+      bottom: 50px;
       left: 14px;
       right: 14px;
-      background: #0f291e;
+      background: #0d281e;
       border: 1px solid #10b981;
-      border-radius: 12px;
-      padding: 0.5rem 0.8rem;
+      border-radius: 14px;
+      padding: 0.6rem 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.74rem;
+      color: #34d399;
+      font-weight: 700;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
+      z-index: 10;
+      animation: floatBanner 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatBanner {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-4px); }
+    }
+
+    /* Phone Bottom Home Bar */
+    .phone-home-indicator {
+      width: 120px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-full);
+      margin: 8px auto 6px;
+    }
+
+    /* Floating Badges outside Phone */
+    .floating-badge {
+      position: absolute;
+      background: rgba(14, 19, 28, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-full);
+      padding: 0.5rem 1rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.72rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+      pointer-events: none;
+      z-index: 25;
+    }
+
+    .badge-top-right {
+      top: 40px;
+      right: -30px;
+      border-color: rgba(16, 185, 129, 0.4);
       color: #34d399;
-      font-weight: 600;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.6);
-      animation: floatSubtle 3s ease-in-out infinite alternate;
+      animation: floatBadge1 4s ease-in-out infinite alternate;
     }
 
-    @keyframes floatSubtle {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-3px); }
+    .badge-bottom-left {
+      bottom: 80px;
+      left: -35px;
+      border-color: rgba(6, 182, 212, 0.4);
+      color: #38bdf8;
+      animation: floatBadge2 4.5s ease-in-out infinite alternate;
     }
 
-    /* Bento Secondary Cards */
-    .card-medium {
+    @keyframes floatBadge1 {
+      0% { transform: translateY(0) rotate(2deg); }
+      100% { transform: translateY(-12px) rotate(-1deg); }
+    }
+
+    @keyframes floatBadge2 {
+      0% { transform: translateY(0) rotate(-2deg); }
+      100% { transform: translateY(-10px) rotate(2deg); }
+    }
+
+    /* SECONDARY BENTO CARDS */
+    .card-half {
       grid-column: span 6;
     }
 
-    .card-small {
-      grid-column: span 4;
-    }
-
     /* ==========================================================================
-       TECHNICAL ARSENAL (HONEST & CONCISE)
+       ENGINEERING PRINCIPLES (ANTI-SLOP ARCHITECTURE)
        ========================================================================== */
-    .skills-section {
-      margin-bottom: 6rem;
-    }
-
-    .skills-grid {
+    .principles-deck {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.75rem;
     }
 
-    .skill-box {
+    .principle-box {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: 1.75rem;
-      transition: all 0.3s var(--spring-ease);
+      padding: 2.25rem;
+      transition: all 0.3s var(--spring-smooth);
     }
 
-    .skill-box:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-3px);
+    .principle-box:hover {
+      border-color: var(--border-light);
+      transform: translateY(-4px);
     }
 
-    .skill-cat-title {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
+    .principle-tag {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent-emerald-light);
+      margin-bottom: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       TECHNICAL ARSENAL (SKILLS)
+       ========================================================================== */
+    .skills-deck {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .skill-card-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: all 0.3s var(--spring-smooth);
+    }
+
+    .skill-card-box:hover {
+      border-color: var(--border-light);
+      transform: translateY(-4px);
+    }
+
+    .skill-box-title {
+      font-size: 1.25rem;
+      margin-bottom: 1.25rem;
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.75rem;
     }
 
-    .skill-tags {
+    .skill-pills-wrap {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.55rem;
     }
 
-    .skill-tag {
-      background: var(--bg-glass);
+    .skill-item-pill {
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
-      padding: 0.35rem 0.7rem;
-      font-size: 0.82rem;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.84rem;
       font-family: var(--font-mono);
       color: var(--text-secondary);
     }
 
     /* ==========================================================================
-       ENGINEERING VALUES (ANTI-SLOP PRINCIPLES)
+       CONTACT BANNER & FOOTER
        ========================================================================== */
-    .principles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 6rem;
-    }
-
-    .principle-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-    }
-
-    .principle-num {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--accent-emerald);
-      margin-bottom: 0.75rem;
-      font-weight: 600;
-    }
-
-    .principle-title {
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-    }
-
-    /* ==========================================================================
-       CONTACT & FOOTER
-       ========================================================================== */
-    .contact-banner {
-      background: linear-gradient(145deg, #101520, #0a0d14);
+    .contact-card-wrap {
+      background: linear-gradient(145deg, #101522, #0a0d15);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-xl);
-      padding: 3.5rem 2.5rem;
+      padding: 4.5rem 2.5rem;
       text-align: center;
-      margin-bottom: 4rem;
       position: relative;
       overflow: hidden;
+      margin-bottom: 5rem;
     }
 
-    .contact-banner::before {
+    .contact-card-wrap::before {
       content: '';
       position: absolute;
-      top: -50%;
+      top: -40%;
       left: 50%;
       transform: translateX(-50%);
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, transparent 70%);
       pointer-events: none;
     }
 
-    .contact-title {
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      margin-bottom: 1rem;
-    }
-
-    .copy-pill {
+    .copy-button-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.75rem;
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: var(--radius-full);
-      padding: 0.7rem 1.4rem;
-      color: #fff;
+      padding: 0.85rem 1.75rem;
+      color: #ffffff;
       font-family: var(--font-mono);
-      font-size: 0.95rem;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.25s var(--spring-bounce);
-      margin-top: 1.5rem;
+      transition: all 0.25s var(--spring-bouncy);
+      margin-top: 2rem;
     }
 
-    .copy-pill:hover {
+    .copy-button-pill:hover {
       background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     }
 
     footer {
-      padding-bottom: 3rem;
+      padding-bottom: 3.5rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       gap: 1.5rem;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       border-top: 1px solid var(--border-subtle);
-      padding-top: 2rem;
+      padding-top: 2.25rem;
     }
 
-    .footer-links {
+    .footer-links-row {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.75rem;
     }
 
-    .footer-link {
+    .footer-item-link {
       color: var(--text-secondary);
       text-decoration: none;
       transition: color 0.2s;
     }
 
-    .footer-link:hover {
-      color: var(--text-primary);
+    .footer-item-link:hover {
+      color: #ffffff;
     }
 
     /* ==========================================================================
-       RESPONSIVE DESIGN (MOBILE-FIRST PRINCIPLES)
+       RESPONSIVE DESIGN (PROPORTIONAL, NEVER GEPENG!)
        ========================================================================== */
-    @media (max-width: 992px) {
-      .card-duitku {
+    @media (max-width: 1024px) {
+      .card-duitku-flagship {
         grid-template-columns: 1fr;
+        gap: 3rem;
       }
-      .card-medium {
+      .card-half {
         grid-column: span 12;
       }
-      .card-small {
-        grid-column: span 12;
+      .phone-stage {
+        margin-top: 1rem;
       }
-      .phone-mockup-wrapper {
-        margin-top: 1.5rem;
+      .badge-top-right {
+        right: 0;
+      }
+      .badge-bottom-left {
+        left: 0;
       }
     }
 
     @media (max-width: 768px) {
       .nav-bar {
-        padding: 0.4rem 0.5rem 0.4rem 0.9rem;
-        gap: 0.8rem;
+        padding: 0.45rem 0.6rem 0.45rem 1.1rem;
+        gap: 1rem;
       }
       .nav-links {
         display: none;
       }
       .hero-section {
-        padding-top: 7rem;
-      }
-      .hero-title {
-        font-size: 2.3rem;
+        padding-top: 8rem;
       }
       .bento-card {
-        padding: 1.5rem;
+        padding: 1.75rem;
+      }
+      .phone-device {
+        width: 100%;
+        max-width: 320px;
+        min-height: 620px;
+        height: 620px;
+      }
+      .floating-badge {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Subtle Film Grain -->
+  <!-- Ambient Blobs Background -->
+  <div class="ambient-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Interactive Constellation Canvas -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- Film Noise Texture -->
   <div class="noise-overlay"></div>
 
-  <!-- FLOATING NAVIGATION (UI/UX PRO MAX) -->
+  <!-- FLOATING NAVIGATION -->
   <header class="nav-wrapper">
     <nav class="nav-bar">
       <a href="#" class="nav-brand">
@@ -914,12 +1185,12 @@
       </a>
       <ul class="nav-links">
         <li><a href="#projects" class="nav-link">Karya</a></li>
-        <li><a href="#architecture" class="nav-link">Arsitektur</a></li>
+        <li><a href="#principles" class="nav-link">Prinsip</a></li>
         <li><a href="#skills" class="nav-link">Keahlian</a></li>
       </ul>
-      <a href="https://github.com/bagas6282" target="_blank" rel="noopener noreferrer" class="btn-contact-nav">
+      <a href="https://github.com/bagas6282" target="_blank" rel="noopener noreferrer" class="nav-btn">
         <span>GitHub</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
       </a>
     </nav>
   </header>
@@ -928,424 +1199,579 @@
     
     <!-- HERO SECTION -->
     <section class="hero-section">
-      <div class="hero-tag">
+      <div class="hero-badge">
         <span>⚡ SOFTWARE ENGINEER & MOBILE ARCHITECT</span>
       </div>
       <h1 class="hero-title">
-        Membangun aplikasi mobile <span class="emerald-text">cepat</span>, sistem offline-first, dan otomasi cerdas.
+        Membangun aplikasi mobile <span class="emerald-gradient">responsif</span>, sistem offline-first, dan otomasi cerdas.
       </h1>
-      <p class="hero-desc">
-        Mahasiswa Teknologi Informasi berbasis di Indonesia. Berfokus pada Flutter performa tinggi, arsitektur data lokal (SQLite), integrasi AI on-device, dan infrastruktur Linux.
+      <p class="hero-subtitle">
+        Mahasiswa Teknologi Informasi berbasis di Indonesia. Mengembangkan aplikasi Flutter performa tinggi, database lokal terenkripsi, integrasi AI on-device tanpa latensi cloud, dan arsitektur server Linux.
       </p>
       
       <div class="hero-actions">
-        <a href="#projects" class="btn-primary">
-          <span>Lihat Portofolio</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <a href="#projects" class="btn-main">
+          <span>Jelajahi Karya</span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="https://github.com/bagas6282/duitku" target="_blank" rel="noopener noreferrer" class="btn-secondary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <a href="https://github.com/bagas6282/duitku" target="_blank" rel="noopener noreferrer" class="btn-glass">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           <span>Repositori Duitku</span>
         </a>
       </div>
 
-      <div class="hero-stats">
-        <div class="stat-item">
-          <span class="stat-number">129+</span>
-          <span class="stat-label">Automated Tests Passed</span>
+      <div class="hero-stats-row">
+        <div class="stat-box">
+          <span class="stat-val counter" data-target="129">0</span>
+          <span class="stat-lbl">Automated Test Suites Passed</span>
         </div>
-        <div class="stat-item">
-          <span class="stat-number">100%</span>
-          <span class="stat-label">Local-First (No Cloud Leak)</span>
+        <div class="stat-box">
+          <span class="stat-val">100%</span>
+          <span class="stat-lbl">On-Device Offline Privacy</span>
         </div>
-        <div class="stat-item">
-          <span class="stat-number">60 FPS</span>
-          <span class="stat-label">Hardware-Accelerated UI</span>
+        <div class="stat-box">
+          <span class="stat-val">60 FPS</span>
+          <span class="stat-lbl">Silky Smooth UI Motion</span>
         </div>
-        <div class="stat-item">
-          <span class="stat-number">v1.5.0</span>
-          <span class="stat-label">Production Release</span>
+        <div class="stat-box">
+          <span class="stat-val">v1.5.0</span>
+          <span class="stat-lbl">Multiplatform Production</span>
         </div>
       </div>
     </section>
 
-    <!-- FLAGSHIP SHOWCASE: DUITKU -->
-    <section id="projects" class="section-header">
-      <span class="section-eyebrow">01 // PROYEK UNGGULAN</span>
-      <h2 class="section-title">Karya yang dirancang dengan teliti.</h2>
-      <p>Tidak ada kode boilerplate generik. Setiap modul diuji unit, dioptimasi memori, dan bebas bloat.</p>
-    </section>
+    <!-- FLAGSHIP SECTION: DUITKU -->
+    <section id="projects" class="section-wrap">
+      <div class="section-heading-box">
+        <span class="section-tagline">01 // KARYA UTAMA</span>
+        <h2 class="section-title">Aplikasi yang dirakit dengan presisi.</h2>
+        <p>Bukan template AI instan. Setiap alur, query SQL, dan widget dibangun dengan perhatian penuh pada pengalaman pengguna.</p>
+      </div>
 
-    <div class="bento-grid">
-      
-      <!-- CARD 1: DUITKU MAIN (SPAN 12) -->
-      <article class="bento-card card-duitku tilt-card">
-        <div class="spotlight"></div>
-        <div>
-          <div class="badge-pill">
-            <span>🟢 FLUTTER 3.29 • PRODUCTION READY</span>
+      <div class="bento-showcase">
+        
+        <!-- CARD 1: DUITKU (FULL SPAN 12) -->
+        <article class="bento-card card-duitku-flagship">
+          <div class="spotlight-glow"></div>
+          <div>
+            <div class="pill-status">
+              <span>🟢 FLUTTER 3.29 • PRODUCTION RELEASE</span>
+            </div>
+            <h3 class="project-header-title">Duitku — Personal Finance & Budget Planner</h3>
+            <p class="project-body">
+              Aplikasi pelacak keuangan independen untuk Android dan iOS. Menghitung mutasi saldo fleksibel secara <strong>Harian (Per Tanggal)</strong> dan <strong>Bulanan</strong>, dilengkapi OCR cerdas berbasis <strong>Google ML Kit</strong> untuk membaca nominal struk belanja fisik secara on-device tanpa server luar.
+            </p>
+
+            <div class="tech-pill-list">
+              <span class="tech-pill primary">Flutter 3.29</span>
+              <span class="tech-pill primary">Google ML Kit OCR</span>
+              <span class="tech-pill">SQLite (sqflite_common_ffi)</span>
+              <span class="tech-pill">Biometric Lock (local_auth)</span>
+              <span class="tech-pill">Dual-Scheme v1+v2+v3 Signing</span>
+              <span class="tech-pill">fl_chart Analytics</span>
+            </div>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <a href="https://github.com/bagas6282/duitku/releases/download/v1.5.0/duitku-v1.5.0.apk" class="btn-main" style="padding: 0.75rem 1.4rem; font-size: 0.92rem;">
+                <span>Unduh APK v1.5.0</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              </a>
+              <a href="https://github.com/bagas6282/duitku" target="_blank" rel="noopener noreferrer" class="btn-glass" style="padding: 0.75rem 1.4rem; font-size: 0.92rem;">
+                <span>Lihat Kode</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              </a>
+            </div>
           </div>
-          <h3 class="project-title">Duitku — Personal Finance & Budget Planner</h3>
-          <p class="project-summary">
-            Aplikasi pelacak keuangan mobile independen untuk Android & iOS. Menghitung arus kas harian dan bulanan dengan presisi, dilengkapi AI OCR Google ML Kit untuk memindai struk belanja fisik langsung di perangkat tanpa kirim data ke server.
-          </p>
 
-          <div class="tech-chips">
-            <span class="chip highlight">Flutter 3.29</span>
-            <span class="chip highlight">Google ML Kit OCR</span>
-            <span class="chip">SQLite (sqflite_common_ffi)</span>
-            <span class="chip">Biometric Security (local_auth)</span>
-            <span class="chip">Dual Period Aggregation</span>
-            <span class="chip">fl_chart</span>
-            <span class="chip">Dual-Scheme v1+v2 APK Signing</span>
-          </div>
-
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <a href="https://github.com/bagas6282/duitku/releases/download/v1.5.0/duitku-v1.5.0.apk" class="btn-primary" style="padding: 0.65rem 1.25rem; font-size: 0.88rem;">
-              <span>Unduh APK v1.5.0</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-            </a>
-            <a href="https://github.com/bagas6282/duitku" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding: 0.65rem 1.25rem; font-size: 0.88rem;">
-              <span>Source Code</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- INTERACTIVE LIVE PHONE SIMULATOR (MOTION UI) -->
-        <div class="phone-mockup-wrapper">
-          <div class="phone-frame">
-            <div class="phone-notch"></div>
+          <!-- AUTHENTIC PHONE SIMULATOR (TALL & CURVED) -->
+          <div class="phone-stage">
             
-            <!-- In-App Hero Card -->
-            <div class="mock-hero-card">
-              <!-- Mode Switcher (Interactive) -->
-              <div class="mock-period-toggle">
-                <button id="btnDaily" class="mock-period-btn active daily" onclick="switchPeriod('daily')">📅 Harian</button>
-                <button id="btnMonthly" class="mock-period-btn" onclick="switchPeriod('monthly')">🗓️ Bulanan</button>
-              </div>
-
-              <div class="mock-date-header">
-                <span id="periodTitle" class="mock-date-title">18 September 2026</span>
-                <span style="font-size: 0.7rem; color: #10b981; font-family: var(--font-mono);">● Realtime</span>
-              </div>
-
-              <div id="balanceVal" class="mock-balance-val">Rp29.999</div>
-
-              <div class="mock-in-out">
-                <div class="mock-in-out-col">
-                  <div class="mock-label">Pemasukan</div>
-                  <div id="incomeVal" class="mock-val-green">+Rp50.000</div>
-                </div>
-                <div style="width: 1px; height: 26px; background: rgba(255,255,255,0.1);"></div>
-                <div class="mock-in-out-col">
-                  <div class="mock-label">Pengeluaran</div>
-                  <div id="expenseVal" class="mock-val-red">-Rp20.001</div>
-                </div>
-              </div>
+            <!-- Floating Exterior Badges -->
+            <div class="floating-badge badge-top-right">
+              <span>📷</span>
+              <span>Google ML Kit OCR</span>
+            </div>
+            <div class="floating-badge badge-bottom-left">
+              <span>🔒</span>
+              <span>100% Offline SQLite</span>
             </div>
 
-            <!-- In-App Transactions List -->
-            <div class="mock-tx-list">
-              <div class="mock-tx-item">
-                <div class="mock-tx-info">
-                  <div class="mock-tx-icon">☕</div>
-                  <div>
-                    <div id="tx1Name" class="mock-tx-name">Kopi Susu Senja</div>
-                    <div id="tx1Date" class="mock-tx-date">Hari ini • 14:30</div>
-                  </div>
-                </div>
-                <div id="tx1Amt" class="mock-tx-amount">-Rp20.001</div>
+            <div class="phone-device" id="phoneMockup">
+              
+              <!-- Dynamic Island Notch -->
+              <div class="dynamic-island">
+                <div class="camera-lens"></div>
+                <div class="sensor-indicator"></div>
               </div>
 
-              <div class="mock-tx-item">
-                <div class="mock-tx-info">
-                  <div class="mock-tx-icon" style="background: rgba(6,182,212,0.15);">💼</div>
-                  <div>
-                    <div id="tx2Name" class="mock-tx-name">Honor Freelance</div>
-                    <div id="tx2Date" class="mock-tx-date">Hari ini • 09:15</div>
+              <!-- Top Status Bar -->
+              <div class="phone-status-bar">
+                <span id="livePhoneClock">09:41</span>
+                <div class="status-icons">
+                  <span>5G</span>
+                  <span>📶</span>
+                  <span>🔋 98%</span>
+                </div>
+              </div>
+
+              <!-- Inside App Screen -->
+              <div class="phone-screen-content">
+                
+                <!-- Laser Sweep Animation Effect -->
+                <div class="scan-laser"></div>
+
+                <!-- App Balance Card -->
+                <div class="app-hero-card">
+                  <!-- Interactive Daily vs Monthly Toggle -->
+                  <div class="app-toggle-bar">
+                    <button id="btnDaily" class="app-toggle-btn active" onclick="setPhonePeriod('daily')">📅 Harian</button>
+                    <button id="btnMonthly" class="app-toggle-btn" onclick="setPhonePeriod('monthly')">🗓️ Bulanan</button>
+                  </div>
+
+                  <div class="app-date-nav">
+                    <span id="txtPeriodTitle" class="app-date-text">18 September 2026</span>
+                    <span style="font-size: 0.7rem; color: #10b981; font-family: var(--font-mono); font-weight: 700;">● Aktif</span>
+                  </div>
+
+                  <div id="txtBalance" class="app-balance-display">Rp29.999</div>
+
+                  <div class="app-in-out-grid">
+                    <div class="in-out-subcol">
+                      <div class="in-out-lbl">Pemasukan</div>
+                      <div id="txtIncome" class="in-out-green">+Rp50.000</div>
+                    </div>
+                    <div style="width: 1px; height: 26px; background: rgba(255, 255, 255, 0.1);"></div>
+                    <div class="in-out-subcol" style="padding-left: 0.75rem;">
+                      <div class="in-out-lbl">Pengeluaran</div>
+                      <div id="txtExpense" class="in-out-red">-Rp20.001</div>
+                    </div>
                   </div>
                 </div>
-                <div id="tx2Amt" class="mock-tx-amount" style="color: #34d399;">+Rp50.000</div>
-              </div>
-            </div>
 
-            <!-- Bottom Fixed Feedback Banner (User's Exact Refinement) -->
-            <div class="mock-bottom-snackbar">
-              <span>✓</span>
-              <span>Struk belanja berhasil dipindai</span>
+                <!-- Recent Transactions List -->
+                <div class="app-tx-list">
+                  <div class="app-tx-card">
+                    <div class="tx-meta-box">
+                      <div class="tx-avatar" style="background: rgba(16, 185, 129, 0.15);">☕</div>
+                      <div>
+                        <div id="txItem1Title" class="tx-title">Kopi Susu Senja</div>
+                        <div id="txItem1Sub" class="tx-sub">Hari ini • 14:30</div>
+                      </div>
+                    </div>
+                    <div id="txItem1Amt" class="tx-num" style="color: #f1f5f9;">-Rp20.001</div>
+                  </div>
+
+                  <div class="app-tx-card">
+                    <div class="tx-meta-box">
+                      <div class="tx-avatar" style="background: rgba(6, 182, 212, 0.15);">💼</div>
+                      <div>
+                        <div id="txItem2Title" class="tx-title">Honor Freelance</div>
+                        <div id="txItem2Sub" class="tx-sub">Hari ini • 09:15</div>
+                      </div>
+                    </div>
+                    <div id="txItem2Amt" class="tx-num" style="color: #34d399;">+Rp50.000</div>
+                  </div>
+
+                  <div class="app-tx-card">
+                    <div class="tx-meta-box">
+                      <div class="tx-avatar" style="background: rgba(244, 63, 94, 0.15);">🚆</div>
+                      <div>
+                        <div class="tx-title">Tiket Commuter</div>
+                        <div class="tx-sub">Kemarin • 18:20</div>
+                      </div>
+                    </div>
+                    <div class="tx-num" style="color: #f1f5f9;">-Rp8.000</div>
+                  </div>
+                </div>
+
+                <!-- Bottom Fixed Feedback Banner (User's Exact UI Refinement) -->
+                <div class="app-bottom-feedback">
+                  <span>✓</span>
+                  <span>Struk belanja berhasil dipindai • Total Rp20.001</span>
+                </div>
+
+              </div>
+
+              <!-- Phone Bottom Indicator Bar -->
+              <div class="phone-home-indicator"></div>
+
             </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <!-- CARD 2: AI TUTOR SCAFFOLD (SPAN 6) -->
-      <article class="bento-card card-medium tilt-card">
-        <div class="spotlight"></div>
-        <div class="badge-pill">
-          <span>FULLSTACK • MULTI-TIER ARCHITECTURE</span>
-        </div>
-        <h3 style="font-size: 1.6rem; margin-bottom: 0.75rem;">AI Tutor Platform Scaffold</h3>
-        <p style="margin-bottom: 1.5rem; font-size: 0.95rem;">
-          Arsitektur terdistribusi yang memadukan backend enterprise Laravel, antarmuka reaktif Vue 3, dan microservice pemrosesan bahasa alami Flask (Python) yang modular.
-        </p>
-        <div class="tech-chips">
-          <span class="chip">Laravel 11</span>
-          <span class="chip">Vue.js 3</span>
-          <span class="chip">Flask (Python)</span>
-          <span class="chip">RESTful API</span>
-        </div>
-        <a href="https://github.com/bagas6282/ai-tutor" target="_blank" rel="noopener noreferrer" class="footer-link" style="display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; font-size: 0.88rem; color: var(--accent-emerald);">
-          <span>Periksa Source Code</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-        </a>
-      </article>
+        <!-- CARD 2: AI TUTOR (SPAN 6) -->
+        <article class="bento-card card-half">
+          <div class="spotlight-glow"></div>
+          <div class="pill-status">
+            <span>FULLSTACK • MULTI-TIER</span>
+          </div>
+          <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">AI Tutor Platform Scaffold</h3>
+          <p style="margin-bottom: 1.75rem; color: var(--text-secondary);">
+            Arsitektur terdistribusi yang menyatukan backend enterprise Laravel, antarmuka reaktif Vue.js 3, dan microservice pemrosesan bahasa alami Flask (Python).
+          </p>
+          <div class="tech-pill-list">
+            <span class="tech-pill">Laravel 11</span>
+            <span class="tech-pill">Vue 3</span>
+            <span class="tech-pill">Flask Python</span>
+            <span class="tech-pill">RESTful API</span>
+          </div>
+          <a href="https://github.com/bagas6282/ai-tutor" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--accent-emerald-light); text-decoration: none;">
+            <span>Buka Repositori</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </a>
+        </article>
 
-      <!-- CARD 3: TELEGRAM HERMES BOT (SPAN 6) -->
-      <article class="bento-card card-medium tilt-card">
-        <div class="spotlight"></div>
-        <div class="badge-pill">
-          <span>SYSTEMS & DEVOPS • BOT ENGINE</span>
-        </div>
-        <h3 style="font-size: 1.6rem; margin-bottom: 0.75rem;">Telegram Hermes Bot Bridge</h3>
-        <p style="margin-bottom: 1.5rem; font-size: 0.95rem;">
-          Integrasi bot messaging cerdas yang menghubungkan gateway agent dengan multi-provider fallback otomatis, manajemen polling anti-conflict 409, dan persistent tunnel PM2.
-        </p>
-        <div class="tech-chips">
-          <span class="chip">Python 3.12</span>
-          <span class="chip">Telegram Bot API</span>
-          <span class="chip">PM2 Process Manager</span>
-          <span class="chip">Reverse Tunneling</span>
-        </div>
-        <a href="https://github.com/bagas6282/telegram-hermes-bot" target="_blank" rel="noopener noreferrer" class="footer-link" style="display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; font-size: 0.88rem; color: var(--accent-emerald);">
-          <span>Periksa Source Code</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-        </a>
-      </article>
+        <!-- CARD 3: TELEGRAM BOT (SPAN 6) -->
+        <article class="bento-card card-half">
+          <div class="spotlight-glow"></div>
+          <div class="pill-status">
+            <span>SYSTEMS & DEVOPS • BOT ENGINE</span>
+          </div>
+          <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">Telegram Hermes Bot Bridge</h3>
+          <p style="margin-bottom: 1.75rem; color: var(--text-secondary);">
+            Jembatan perpesanan cerdas yang menghubungkan gateway agent dengan multi-provider fallback otomatis, manajemen polling anti-conflict 409, dan persistent tunnel PM2.
+          </p>
+          <div class="tech-pill-list">
+            <span class="tech-pill">Python 3.12</span>
+            <span class="tech-pill">Telegram Bot API</span>
+            <span class="tech-pill">PM2 Daemons</span>
+            <span class="tech-pill">SSH Tunneling</span>
+          </div>
+          <a href="https://github.com/bagas6282/telegram-hermes-bot" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--accent-emerald-light); text-decoration: none;">
+            <span>Buka Repositori</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </a>
+        </article>
 
-    </div>
-
-    <!-- ENGINEERING PRINCIPLES (ANTI-SLOP DOCTRINE) -->
-    <section id="architecture" class="section-header">
-      <span class="section-eyebrow">02 // PRINSIP REKAYASA</span>
-      <h2 class="section-title">Anti-Slop. Kualitas di atas jargon.</h2>
-      <p>Standar yang selalu dipegang saat menulis baris pertama hingga fase deployment.</p>
+      </div>
     </section>
 
-    <div class="principles-grid">
-      <div class="principle-card">
-        <div class="principle-num">01 / LOCAL-FIRST PRIVACY</div>
-        <h3 class="principle-title">Data Pengguna Adalah Milik Pengguna</h3>
-        <p style="font-size: 0.95rem;">
-          Arsitektur offline-first menjamin aplikasi dapat beroperasi 100% tanpa internet. Catatan keuangan dan pemindaian struk tidak pernah diunggah ke pihak ketiga.
-        </p>
+    <!-- ENGINEERING PRINCIPLES -->
+    <section id="principles" class="section-wrap">
+      <div class="section-heading-box">
+        <span class="section-tagline">02 // PRINSIP REKAYASA</span>
+        <h2 class="section-title">Bebas Jargon. Kualitas Tanpa Kompromi.</h2>
+        <p>Pedoman baku yang diterapkan di setiap proyek rekayasa perangkat lunak.</p>
       </div>
 
-      <div class="principle-card">
-        <div class="principle-num">02 / ZERO COMPROMISE TESTING</div>
-        <h3 class="principle-title">129 Unit & Widget Test Suites</h3>
-        <p style="font-size: 0.95rem;">
-          Tidak ada kode yang dirilis hanya berdasarkan asumsi visual. Dari logika kalkulasi bunga, pembulatan mata uang, hingga layout rendering divalidasi via automated tests.
-        </p>
-      </div>
+      <div class="principles-deck">
+        <div class="principle-box">
+          <div class="principle-tag">01 / LOCAL-FIRST SOVEREIGNTY</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 0.85rem;">Privasi Data Mutlak</h3>
+          <p style="font-size: 0.98rem;">
+            Aplikasi dirancang offline-first. Transaksi dan dokumen pengguna disimpan di penyimpanan lokal perangkat tanpa bergantung pada server pihak ketiga.
+          </p>
+        </div>
 
-      <div class="principle-card">
-        <div class="principle-num">03 / TACTILE FLUID MOTION</div>
-        <h3 class="principle-title">Framer Motion Physics</h3>
-        <p style="font-size: 0.95rem;">
-          Animasi bukan hiasan lambat yang membuang waktu. Transisi menggunakan kurva pegas alami (damping 25-30), memberi umpan balik haptik instan dan responsif.
-        </p>
-      </div>
-    </div>
+        <div class="principle-box">
+          <div class="principle-tag">02 / RIGOROUS TESTING</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 0.85rem;">129 Automated Test Suites</h3>
+          <p style="font-size: 0.98rem;">
+            Setiap fitur mulai dari kalkulasi saldo, migrasi skema SQLite, hingga layout widget diuji secara menyeluruh melalui continuous integration sebelum rilis.
+          </p>
+        </div>
 
-    <!-- SKILLS ARSENAL -->
-    <section id="skills" class="section-header">
-      <span class="section-eyebrow">03 // KEMAMPUAN TEKNIS</span>
-      <h2 class="section-title">Teknologi yang dikuasai.</h2>
-      <p>Peralatan yang digunakan sehari-hari untuk merakit aplikasi siap produksi.</p>
+        <div class="principle-box">
+          <div class="principle-tag">03 / TACTILE FLUIDITY</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 0.85rem;">Physics-Based Motion</h3>
+          <p style="font-size: 0.98rem;">
+            Animasi menggunakan parameter pegas alami (damping 25-30) untuk memberi umpan balik haptik yang nyata tanpa membebani performa perangkat.
+          </p>
+        </div>
+      </div>
     </section>
 
-    <div class="skills-grid" style="margin-bottom: 6rem;">
-      <div class="skill-box">
-        <h3 class="skill-cat-title">📱 Mobile Development</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Flutter</span>
-          <span class="skill-tag">Dart</span>
-          <span class="skill-tag">Android SDK</span>
-          <span class="skill-tag">iOS Xcode / Runner</span>
-          <span class="skill-tag">Google ML Kit</span>
-          <span class="skill-tag">SQLite</span>
-          <span class="skill-tag">State Management</span>
-        </div>
+    <!-- TECHNICAL ARSENAL -->
+    <section id="skills" class="section-wrap">
+      <div class="section-heading-box">
+        <span class="section-tagline">03 // KEAHLIAN TEKNOLOGI</span>
+        <h2 class="section-title">Peralatan & Bahasa Pemrograman.</h2>
+        <p>Ekosistem teknologi yang digunakan untuk membangun sistem produksi.</p>
       </div>
 
-      <div class="skill-box">
-        <h3 class="skill-cat-title">⚙️ Backend & Systems</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Python 3</span>
-          <span class="skill-tag">Flask</span>
-          <span class="skill-tag">PHP</span>
-          <span class="skill-tag">Laravel</span>
-          <span class="skill-tag">Linux / Ubuntu</span>
-          <span class="skill-tag">Bash Scripting</span>
-          <span class="skill-tag">PM2</span>
+      <div class="skills-deck">
+        <div class="skill-card-box">
+          <h3 class="skill-box-title">📱 Mobile Development</h3>
+          <div class="skill-pills-wrap">
+            <span class="skill-item-pill">Flutter 3.29</span>
+            <span class="skill-item-pill">Dart 3.7</span>
+            <span class="skill-item-pill">Android SDK</span>
+            <span class="skill-item-pill">iOS Runner</span>
+            <span class="skill-item-pill">Google ML Kit</span>
+            <span class="skill-item-pill">SQLite / FFI</span>
+            <span class="skill-item-pill">State Management</span>
+          </div>
         </div>
-      </div>
 
-      <div class="skill-box">
-        <h3 class="skill-cat-title">🎨 UI/UX & Motion</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Bento Grid Design</span>
-          <span class="skill-tag">Framer Motion Logic</span>
-          <span class="skill-tag">Micro-interactions</span>
-          <span class="skill-tag">CSS Grid & Flexbox</span>
-          <span class="skill-tag">Dark-Mode Aesthetics</span>
-          <span class="skill-tag">Responsive Ergonomics</span>
+        <div class="skill-card-box">
+          <h3 class="skill-box-title">⚙️ Backend & Systems</h3>
+          <div class="skill-pills-wrap">
+            <span class="skill-item-pill">Python 3.12</span>
+            <span class="skill-item-pill">Flask</span>
+            <span class="skill-item-pill">PHP 8.2</span>
+            <span class="skill-item-pill">Laravel 11</span>
+            <span class="skill-item-pill">Linux Ubuntu</span>
+            <span class="skill-item-pill">Bash</span>
+            <span class="skill-item-pill">PM2 Daemons</span>
+          </div>
         </div>
-      </div>
 
-      <div class="skill-box">
-        <h3 class="skill-cat-title">🛠️ Engineering Tooling</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Git Version Control</span>
-          <span class="skill-tag">GitHub Actions CI/CD</span>
-          <span class="skill-tag">Apksigner v1/v2/v3</span>
-          <span class="skill-tag">ProGuard</span>
-          <span class="skill-tag">Unit & Widget Testing</span>
+        <div class="skill-card-box">
+          <h3 class="skill-box-title">🎨 UI/UX & Motion</h3>
+          <div class="skill-pills-wrap">
+            <span class="skill-item-pill">Bento Grid UI</span>
+            <span class="skill-item-pill">Framer Motion</span>
+            <span class="skill-item-pill">Micro-Interactions</span>
+            <span class="skill-item-pill">Dark Aesthetics</span>
+            <span class="skill-item-pill">Responsive Design</span>
+            <span class="skill-item-pill">60/120 FPS Easing</span>
+          </div>
+        </div>
+
+        <div class="skill-card-box">
+          <h3 class="skill-box-title">🛠️ Tooling & DevOps</h3>
+          <div class="skill-pills-wrap">
+            <span class="skill-item-pill">Git</span>
+            <span class="skill-item-pill">GitHub Actions</span>
+            <span class="skill-item-pill">Apksigner v1/v2/v3</span>
+            <span class="skill-item-pill">ProGuard</span>
+            <span class="skill-item-pill">Unit Testing</span>
+            <span class="skill-item-pill">Widget Testing</span>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- CONTACT BANNER -->
-    <div class="contact-banner">
-      <span class="section-eyebrow" style="color: #fff;">MARI BERKOLABORASI</span>
-      <h2 class="contact-title">Punya proyek mobile atau sistem yang butuh dirapikan?</h2>
-      <p style="max-width: 550px; margin: 0 auto; color: var(--text-secondary);">
-        Terbuka untuk diskusi proyek rekayasa perangkat lunak, freelance mobile development, dan kolaborasi riset teknologi.
+    <div class="contact-card-wrap">
+      <span class="section-tagline" style="color: #ffffff;">KOLABORASI TEKNIS</span>
+      <h2 style="font-size: clamp(2.2rem, 3.6vw, 3.2rem); margin-bottom: 1.25rem;">Mari bangun produk luar biasa bersama.</h2>
+      <p style="max-width: 580px; margin: 0 auto; color: var(--text-secondary); font-size: 1.1rem;">
+        Terbuka untuk kolaborasi proyek mobile Flutter, rekayasa backend, konsultasi arsitektur sistem, dan freelance engineering.
       </p>
       
       <div>
-        <button class="copy-pill" onclick="copyEmail()">
-          <span id="copyIcon">📋</span>
-          <span id="emailText">bagasbeban40@gmail.com</span>
+        <button class="copy-button-pill" onclick="copyContactEmail()">
+          <span id="copyIconBadge">📋</span>
+          <span id="copyEmailLabel">bagasbeban40@gmail.com</span>
         </button>
       </div>
-      <div id="copyToast" style="margin-top: 0.8rem; font-size: 0.82rem; color: var(--accent-emerald); opacity: 0; transition: opacity 0.2s;">
-        ✓ Berhasil disalin ke clipboard!
+      <div id="toastCopied" style="margin-top: 0.95rem; font-size: 0.88rem; color: var(--accent-emerald-light); font-weight: 700; opacity: 0; transition: opacity 0.25s;">
+        ✓ Alamat email berhasil disalin ke clipboard!
       </div>
     </div>
 
     <!-- FOOTER -->
     <footer>
       <div>
-        © 2026 Bagas (bagas6282) • Dirancang dengan presisi tanpa slop.
+        © 2026 Bagas (bagas6282) • Dirancang dengan dedikasi rekayasa penuh.
       </div>
-      <div class="footer-links">
-        <a href="https://github.com/bagas6282" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
-        <a href="https://github.com/bagas6282/duitku" target="_blank" rel="noopener noreferrer" class="footer-link">Duitku Repo</a>
-        <a href="https://t.me/mieayam" target="_blank" rel="noopener noreferrer" class="footer-link">Telegram</a>
+      <div class="footer-links-row">
+        <a href="https://github.com/bagas6282" target="_blank" rel="noopener noreferrer" class="footer-item-link">GitHub</a>
+        <a href="https://github.com/bagas6282/duitku" target="_blank" rel="noopener noreferrer" class="footer-item-link">Duitku App</a>
+        <a href="https://t.me/mieayam" target="_blank" rel="noopener noreferrer" class="footer-item-link">Telegram</a>
       </div>
     </footer>
 
   </main>
 
   <!-- ==========================================================================
-       INTERACTIVE SCRIPTS (MOTION UI & INTERACTIVE PHONE DEMO)
-       ========================================================================== */ -->
+       MOTION UI & INTERACTIVE SCRIPTS
+       ========================================================================== -->
   <script>
-    // 1. Interactive Duitku Simulator (Daily vs Monthly Toggle)
-    function switchPeriod(mode) {
+    // 1. Live Phone Clock Sync
+    function updateClock() {
+      const now = new Date();
+      const hrs = String(now.getHours()).padStart(2, '0');
+      const mins = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('livePhoneClock');
+      if (el) el.textContent = `${hrs}:${mins}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    // 2. Interactive Duitku Simulator (Daily vs Monthly Toggle)
+    function setPhonePeriod(mode) {
       const btnDaily = document.getElementById('btnDaily');
       const btnMonthly = document.getElementById('btnMonthly');
-      const periodTitle = document.getElementById('periodTitle');
-      const balanceVal = document.getElementById('balanceVal');
-      const incomeVal = document.getElementById('incomeVal');
-      const expenseVal = document.getElementById('expenseVal');
-      const tx1Name = document.getElementById('tx1Name');
-      const tx1Date = document.getElementById('tx1Date');
-      const tx1Amt = document.getElementById('tx1Amt');
-      const tx2Name = document.getElementById('tx2Name');
-      const tx2Date = document.getElementById('tx2Date');
-      const tx2Amt = document.getElementById('tx2Amt');
+      const title = document.getElementById('txtPeriodTitle');
+      const bal = document.getElementById('txtBalance');
+      const inc = document.getElementById('txtIncome');
+      const exp = document.getElementById('txtExpense');
+      const tx1Title = document.getElementById('txItem1Title');
+      const tx1Sub = document.getElementById('txItem1Sub');
+      const tx1Amt = document.getElementById('txItem1Amt');
+      const tx2Title = document.getElementById('txItem2Title');
+      const tx2Sub = document.getElementById('txItem2Sub');
+      const tx2Amt = document.getElementById('txItem2Amt');
+
+      bal.style.transform = 'scale(1.1)';
+      setTimeout(() => { bal.style.transform = 'scale(1)'; }, 180);
 
       if (mode === 'daily') {
-        btnDaily.classList.add('active', 'daily');
+        btnDaily.classList.add('active');
         btnMonthly.classList.remove('active');
-        periodTitle.textContent = '18 September 2026';
-        balanceVal.textContent = 'Rp29.999';
-        incomeVal.textContent = '+Rp50.000';
-        expenseVal.textContent = '-Rp20.001';
+        title.textContent = '18 September 2026';
+        bal.textContent = 'Rp29.999';
+        inc.textContent = '+Rp50.000';
+        exp.textContent = '-Rp20.001';
 
-        tx1Name.textContent = 'Kopi Susu Senja';
-        tx1Date.textContent = 'Hari ini • 14:30';
+        tx1Title.textContent = 'Kopi Susu Senja';
+        tx1Sub.textContent = 'Hari ini • 14:30';
         tx1Amt.textContent = '-Rp20.001';
         tx1Amt.style.color = '#f1f5f9';
 
-        tx2Name.textContent = 'Honor Freelance';
-        tx2Date.textContent = 'Hari ini • 09:15';
+        tx2Title.textContent = 'Honor Freelance';
+        tx2Sub.textContent = 'Hari ini • 09:15';
         tx2Amt.textContent = '+Rp50.000';
       } else {
         btnMonthly.classList.add('active');
-        btnDaily.classList.remove('active', 'daily');
-        periodTitle.textContent = 'September 2026';
-        balanceVal.textContent = 'Rp3.850.000';
-        incomeVal.textContent = '+Rp5.500.000';
-        expenseVal.textContent = '-Rp1.650.000';
+        btnDaily.classList.remove('active');
+        title.textContent = 'September 2026';
+        bal.textContent = 'Rp3.850.000';
+        inc.textContent = '+Rp5.500.000';
+        exp.textContent = '-Rp1.650.000';
 
-        tx1Name.textContent = 'Belanja Bulanan Supermarket';
-        tx1Date.textContent = '12 Sep 2026';
+        tx1Title.textContent = 'Belanja Bulanan Supermarket';
+        tx1Sub.textContent = '12 Sep 2026';
         tx1Amt.textContent = '-Rp850.000';
-        tx1Amt.style.color = '#ef4444';
+        tx1Amt.style.color = '#f87171';
 
-        tx2Name.textContent = 'Gaji Proyek Client';
-        tx2Date.textContent = '01 Sep 2026';
+        tx2Title.textContent = 'Gaji Proyek Client';
+        tx2Sub.textContent = '01 Sep 2026';
         tx2Amt.textContent = '+Rp5.000.000';
       }
-
-      // Quick spring bump animation
-      balanceVal.style.transform = 'scale(1.06)';
-      setTimeout(() => {
-        balanceVal.style.transform = 'scale(1)';
-      }, 150);
     }
 
-    // 2. Mouse Spotlight Follower on Bento Cards
+    // 3. Mouse Spotlight Tracker on Bento Cards
     document.querySelectorAll('.bento-card').forEach(card => {
       card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
       });
     });
 
-    // 3. 3D Perspective Tilt on Mouse Move
-    document.querySelectorAll('.tilt-card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        if (window.innerWidth < 768) return; // disable on mobile
-        const rect = card.getBoundingClientRect();
+    // 4. Interactive 3D Perspective Tilt for Phone Device
+    const phone = document.getElementById('phoneMockup');
+    const stage = document.querySelector('.phone-stage');
+    if (stage && phone) {
+      stage.addEventListener('mousemove', e => {
+        if (window.innerWidth < 768) return;
+        const rect = stage.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -4;
-        const rotateY = ((x - centerX) / centerX) * 4;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const rotX = ((y - cy) / cy) * -8;
+        const rotY = ((x - cx) / cx) * 8;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+        phone.style.animation = 'none';
+        phone.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
       });
 
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      stage.addEventListener('mouseleave', () => {
+        phone.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+        setTimeout(() => {
+          phone.style.animation = 'levitatePhone 4.5s ease-in-out infinite alternate';
+        }, 300);
       });
-    });
+    }
 
-    // 4. Copy Email Helper
-    function copyEmail() {
+    // 5. Animated Number Counters
+    const counters = document.querySelectorAll('.counter');
+    let hasAnimated = false;
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasAnimated) {
+          hasAnimated = true;
+          counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            let count = 0;
+            const step = target / 40;
+            const timer = setInterval(() => {
+              count += step;
+              if (count >= target) {
+                counter.textContent = target + '+';
+                clearInterval(timer);
+              } else {
+                counter.textContent = Math.floor(count);
+              }
+            }, 30);
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(c => observer.observe(c));
+
+    // 6. Interactive Star Constellation Canvas
+    const canvas = document.getElementById('particleCanvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = window.innerWidth;
+      let h = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      });
+
+      const particles = [];
+      const particleCount = Math.min(Math.floor(w / 25), 45);
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          r: Math.random() * 1.8 + 0.8
+        });
+      }
+
+      function drawParticles() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.strokeStyle = 'rgba(16, 185, 129, 0.08)';
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0) p.x = w;
+          if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h;
+          if (p.y > h) p.y = 0;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+            if (dist < 130) {
+              ctx.lineWidth = 1 - dist / 130;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(drawParticles);
+      }
+      drawParticles();
+    }
+
+    // 7. Copy Contact Email
+    function copyContactEmail() {
       const email = 'bagasbeban40@gmail.com';
       navigator.clipboard.writeText(email).then(() => {
-        const toast = document.getElementById('copyToast');
-        const icon = document.getElementById('copyIcon');
+        const toast = document.getElementById('toastCopied');
+        const icon = document.getElementById('copyIconBadge');
         icon.textContent = '✓';
         toast.style.opacity = '1';
         setTimeout(() => {
